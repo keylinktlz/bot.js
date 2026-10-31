@@ -8,11 +8,11 @@ const bot = new Telegraf(BOT_TOKEN);
 
 // Danh sách 6 liên kết rút gọn tương ứng với tối đa 6 lần vượt link trong ngày
 const LINK_RUT_GON = [
-    'https://link4m.org/vd2Ta', // Lần 1/6
+    'https://link4m.org/sb6B7', // Lần 1/6
     'https://linkfree.click/s/key-coinz1u19xrmvvuw05e', // Lần 2/6
-    'https://link4m.org/vd2Ta', // Lần 3/6
-    'https://gtraffic.io/G7Z64Q4', // Lần 4/6
-    'https://gtraffic.io/YsG4Q66', // Lần 5/6
+    'https://link4m.org/sb6B7', // Lần 3/6
+    'https://gtraffic.io/1G5QQ66', // Lần 4/6
+    'https://gtraffic.io/-S6Q5Gh', // Lần 5/6
     'https://videotiktoker.com/s/key-bot-ffz1u19xrmvvv05mk'  // Lần 6/6
 ];
 
