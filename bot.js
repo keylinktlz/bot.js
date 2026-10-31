@@ -8,12 +8,12 @@ const bot = new Telegraf(BOT_TOKEN);
 
 // Danh sách 6 liên kết rút gọn tương ứng với tối đa 6 lần vượt link trong ngày
 const LINK_RUT_GON = [
-    'https://link4m.org/ASVrwNuc', // Lần 1/6
-    'https://linkfree.click/s/key-botz1u19xrmvvo09pl', // Lần 2/6
-    'https://link4m.net/ASVrwNuc', // Lần 3/6
-    'https://gtraffic.io/Oj4z6QF', // Lần 4/6
-    'https://gtraffic.io/FpAE6QO', // Lần 5/6
-    'https://videotiktoker.com/s/key-botz1u19xrmvvo8yr4'  // Lần 6/6
+    'https://link4m.org/vd2Ta', // Lần 1/6
+    'https://linkfree.click/s/key-coinz1u19xrmvvuw05e', // Lần 2/6
+    'https://link4m.org/vd2Ta', // Lần 3/6
+    'https://gtraffic.io/G7Z64Q4', // Lần 4/6
+    'https://gtraffic.io/YsG4Q66', // Lần 5/6
+    'https://videotiktoker.com/s/key-bot-ffz1u19xrmvvv05mk'  // Lần 6/6
 ];
 
 // Bộ nhớ tạm lưu trữ thông tin người dùng và danh sách các đơn buff đang chờ duyệt
@@ -25,7 +25,7 @@ function getUserData(userId) {
     if (!users.has(userId)) {
         users.set(userId, {
             coin: 0,
-            status: '🔴', 
+            status: '🔴',
             activeKey: null,
             keyCreatedAt: null,
             step: 0 // Đếm số lần hoàn thành (0 đến 6)
@@ -38,7 +38,7 @@ function getUserData(userId) {
         data.status = '🔴';
         data.activeKey = null;
         data.keyCreatedAt = null;
-        data.step = 0; 
+        data.step = 0;
     }
 
     return data;
@@ -60,15 +60,14 @@ bot.start(async (ctx) => {
     // --- XÁC MINH VƯỢT LINK TRẢ VỀ ---
     if (payload) {
         if (userData.activeKey && payload === userData.activeKey && userData.step < 6) {
-            userData.status = '🟢'; 
+            userData.status = '🟢';
             userData.coin += 1; // +1 Coin khi vượt link thành công
             userData.activeKey = null; // Xóa key để chống dùng lại
-            
             userData.step += 1; // Tăng tiến trình hoàn thành lên
             const completedStep = userData.step;
 
-            let nextStepInfo = completedStep < 6 
-                ? `💡 *Tiến trình hiện tại: ${completedStep}/6. Gõ /getkey để lấy link tiếp theo.*` 
+            let nextStepInfo = completedStep < 6
+                ? `💡 *Tiến trình hiện tại: ${completedStep}/6. Gõ /getkey để lấy link tiếp theo.*`
                 : `🎉 **CHÚC MỪNG! Bạn đã hoàn thành tối đa 6/6 lần trong ngày hôm nay!**`;
 
             return ctx.reply(
@@ -85,7 +84,7 @@ bot.start(async (ctx) => {
     }
 
     // --- MENU KHI BẤM /START THÔNG THƯỜNG ---
-    let menuText = 
+    let menuText =
         `👋 Chào mừng **${ctx.from.first_name}** đến với hệ thống!\n\n` +
         `📌 Trạng thái vượt link: ${userData.status}\n` +
         `📊 Tiến trình hôm nay: **${userData.step}/6 lần**\n` +
@@ -127,7 +126,7 @@ bot.command('getkey', (ctx) => {
 
     userData.activeKey = newKey;
 
-    const message = 
+    const message =
         `🔗 **LINK LẤY KEY NHẬN COIN (Lần ${currentStep + 1}/6)**\n\n` +
         `👉 **Tài khoản:** ${userName}\n` +
         `👉 **Link của bạn:** ${currentLink}\n\n` +
@@ -151,7 +150,6 @@ bot.action('doi_link', async (ctx) => {
     await ctx.answerCbQuery();
     const userId = ctx.from.id;
     const userData = getUserData(userId);
-    
     if (userData.step >= 6) return ctx.reply("⚠️ Bạn đã hoàn thành tối đa 6/6 lần!");
 
     const newKey = generateRandomCode();
@@ -202,14 +200,13 @@ bot.command('blike', async (ctx) => {
     );
 
     try {
-        const adminMessage = 
+        const adminMessage =
             `🔔 **YÊU CẦU BUFF LIKE CẦN DUYỆT!**\n\n` +
             `👤 Người gửi: ${ctx.from.first_name} (@${ctx.from.username || 'N/A'})\n` +
             `🆔 Telegram ID: \`${userId}\`\n` +
             `🎮 **UID Game:** \`${gameUid}\`\n` +
             `💰 Số dư hiện tại của User: ${userData.coin} Coin\n` +
             `⏰ Thời gian: ${new Date().toLocaleString('vi-VN')}`;
-            
         await bot.telegram.sendMessage(ADMIN_ID, adminMessage, {
             parse_mode: 'Markdown',
             reply_markup: {
@@ -331,4 +328,3 @@ bot.command('addcoin', async (ctx) => {
 
 bot.launch();
 console.log("Bot Telegram chạy 100% JS đã khởi động thành công!");
-    
